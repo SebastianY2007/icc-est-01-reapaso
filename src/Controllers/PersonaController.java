@@ -7,13 +7,28 @@ import Models.Persona;
  */
 public class PersonaController {
     /**
-     * Método para ordenar un arreglo de Persona por edad utilizando el algoritmo de
+     * Método para ordenar un persona de Persona por edad utilizando el algoritmo de
      * inserscion .
      * 
      * @param personas Array de Persona a ordenar.
      */
     public void ordenarPorEdad(Persona[] personas) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        int n = personas.length;
+        
+        if (personas == null || personas.length <= 1){
+            return;
+        }
+
+        for (int i = 1; i < n; i++){
+            Persona aux = personas[i];
+            int j = i - 1;
+        
+            while (j >= 0 && personas[j].getEdad() > aux.getEdad()){
+                personas[j + 1] = personas[j];
+                j--;
+            }
+            personas[j + 1] = aux;
+        }
     }
 
     /**
@@ -26,7 +41,20 @@ public class PersonaController {
      *         encuentra.
      */
     public Persona buscarPorEdad(Persona[] personas, int edad) {
-        throw new UnsupportedOperationException("Not implemented yet.");
-
+        int bajo = 0;
+        int alto = personas.length - 1;
+        
+        while (bajo <= alto) {
+            int medio = bajo + (alto - bajo) / 2;
+            if (personas[medio].getEdad() == edad) {
+                return personas[medio];
+            }
+            if (personas[medio].getEdad() > edad) {
+                alto = medio - 1;
+            } else {
+                bajo = medio + 1;
+            }
+        }
+        return null;
     }
 }
